@@ -1,21 +1,22 @@
-import dotenv from "dotenv";
+require('dotenv').config();
 import express, { Express, Request, Response } from "express";
 import path from "path";
 import cors from "cors";
+import mongoose from "mongoose";
+import userRoutes from './routes/userRoutes';
+const app = express();
+const port = process.env.PORT || 5500;
 
-dotenv.config();
-
-const app: Express = express();
-
+// middleware
 app.use(express.json());
-app.use(cors());
+app.use(express.urlencoded({extended:true}));
+app.use(cors({origin:'http://localhost:3000', methods: ["GET", "POST", "PUT", "DELETE"], credentials: true,exposedHeaders: ['Set-Cookie', 'Date', 'ETag']}));
 
-app.get('/', (req: Request, res: Response) => {
-res.send('<h1>Hello World From the Typescript Server!</h1>')
-});
+// routes
+app.use('/projects',userRoutes);
 
-const port = process.env.PORT || 8000;
-
-app.listen(port, () => {
-console.log(`Example app listening on port ${port}`)
-});
+mongoose.connect('mongodb+srv://spos:spos123@cluster0.mb5no7j.mongodb.net/data?retryWrites=true&w=majority').then(()=>{
+    app.listen(port, () => {
+        console.log(`server listening on port ${port}`)
+    });
+}).catch(err=>console.log('some error in connecting'));
