@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const schema = mongoose_1.default.Schema;
 const ImageSchema = new schema({
-    projectId: Number,
-    productImages: [
+    projectName: { type: String, required: true },
+    projectImages: [
         {
             data: Buffer,
             contentType: String

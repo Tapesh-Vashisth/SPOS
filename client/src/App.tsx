@@ -11,6 +11,9 @@ const Project = React.lazy(() => import("./pages/Project"));
 const Awards = React.lazy(() => import("./pages/Awards"));
 const Policy = React.lazy(() => import("./pages/Policy"));
 const Footer = React.lazy(() => import("./components/Footer"));
+const AdminHome = React.lazy(() => import("./pages/AdminHome"));
+const AddImages = React.lazy(() => import("./components/addImages"));
+const SeeImages = React.lazy(() => import("./components/SeeImages"));
 
 function App() {
   return (
@@ -45,6 +48,18 @@ function App() {
 
         <Route path="/privacypolicy" element={<React.Suspense fallback = {<LazyFallBack />}>
           <Policy />
+        </React.Suspense>}></Route>
+
+        <Route path="/admin/seeImages" element={<React.Suspense fallback = {<LazyFallBack />}>
+          <SeeImages />
+        </React.Suspense>}></Route>
+
+        <Route path="/admin/images" element={<React.Suspense fallback = {<LazyFallBack />}>
+          <AddImages />
+        </React.Suspense>}></Route>
+
+        <Route path="/admin" element={<React.Suspense fallback = {<LazyFallBack />}>
+          <AdminHome />
         </React.Suspense>}></Route>
 
         <Route path="/*" element={<React.Suspense fallback = {<LazyFallBack />}>

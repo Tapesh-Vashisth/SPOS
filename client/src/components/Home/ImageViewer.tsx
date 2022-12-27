@@ -7,6 +7,8 @@ const ImageViewer = () => {
 
   return (
     <motion.div style={{
+          padding:0,
+          margin:0,
           width: "100%",
           height: "100vh",
           background: 'url("images/front1.jpg")',

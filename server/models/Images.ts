@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 const schema = mongoose.Schema;
 
 const ImageSchema = new schema({
-    projectId:Number,
-    productImages:[
+    projectName:{type:String,required:true},
+    projectImages:[
         {
             data:Buffer,
             contentType:String

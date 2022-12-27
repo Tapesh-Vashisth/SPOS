@@ -4,6 +4,7 @@ import path from "path";
 import cors from "cors";
 import mongoose from "mongoose";
 import userRoutes from './routes/userRoutes';
+import adminRoutes from './routes/adminRoutes';
 const app = express();
 const port = process.env.PORT || 5500;
 
@@ -14,6 +15,7 @@ app.use(cors({origin:'http://localhost:3000', methods: ["GET", "POST", "PUT", "D
 
 // routes
 app.use('/projects',userRoutes);
+app.use('/admin',adminRoutes);
 
 mongoose.connect('mongodb+srv://spos:spos123@cluster0.mb5no7j.mongodb.net/data?retryWrites=true&w=majority').then(()=>{
     app.listen(port, () => {

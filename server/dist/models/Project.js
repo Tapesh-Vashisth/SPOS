@@ -10,6 +10,7 @@ const ProjectSchema = new schema({
         type: String,
         required: true
     },
+    projectName: { type: String, required: true },
     projectId: Number,
     projectDesc: { type: String },
     clientName: { type: String }

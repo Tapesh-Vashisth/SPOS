@@ -1,0 +1,88 @@
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        multiset<int>m;
+        map<char,int> c;
+        int p = k;
+        string temp="";temp+=s[0];
+        c[s[0]]++;
+        int j=1,i=0;
+        while(j<s.length())
+        {
+            cout<<temp<<endl;
+            if(s[j]!=temp[0])
+            {
+                if(k--)
+                {
+                    temp+=s[j];
+                    c[s[j]]++;
+                    j++;
+                    continue;
+                }
+                else
+                {
+                    cout<<"in"<<endl;
+                    for
+                    m.insert(temp.length());
+                    temp.erase(temp.begin());
+                    i++;
+                    k = p;
+                    continue;
+                }
+            }
+            else
+            {
+                temp+=s[j];
+                j++;
+            }
+        }
+        
+        if(temp.length()>1 && k==0) m.insert(temp.length());
+        
+         for(auto it:m)
+        {
+            cout<<it<<" ";
+        }
+        cout<<endl;
+        return 0;
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//             for(int l=i;l<j-1;l++)
+//             {
+//                 if(nums[l+1])
+//                 if(nums[l]&nums[j])
+//                 {
+//                     f = 1;
+//                     break;
+//                 }
+//                 else if(nums[l]&nums[l+1])
+//                 {
+//                     f=1;
+//                     break;
+//                 }
+//             }

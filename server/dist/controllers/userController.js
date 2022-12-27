@@ -14,19 +14,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSelectProject = exports.getAllProjects = void 0;
 const Project_1 = __importDefault(require("../models/Project"));
+const Images_1 = __importDefault(require("../models/Images"));
+const Images_2 = __importDefault(require("../models/Images"));
 const getAllProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const d = yield Project_1.default.find().exec();
-    if (!d)
+    const i = yield Images_2.default.find().exec();
+    let n = [];
+    if (!d) {
         return res.status(204).json({ data: 'no data exists' });
-    res.status(200).json({ data: d });
+    }
+    yield res.status(200).json({ data: { images: i, project: d } });
 });
 exports.getAllProjects = getAllProjects;
 const getSelectProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.pid;
     const d = yield Project_1.default.findOne({ projectId: id }).exec();
+    const i = yield Images_1.default.findOne({ projectId: id }).exec();
     if (!d) {
         return res.status(404).json({ data: 'not found' });
     }
-    res.status(200).json({ data: d });
+    else {
+        if (!i)
+            return res.status(204).json({ data: Object.assign(Object.assign({}, d), { images: {} }) });
+        else
+            res.status(200).json({ data: Object.assign(Object.assign({}, d), { images: i.projectImages }) });
+    }
 });
 exports.getSelectProject = getSelectProject;
