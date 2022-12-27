@@ -6,13 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const schema = mongoose_1.default.Schema;
 const ProjectSchema = new schema({
-    projectTitle: {
-        type: String,
-        required: true
-    },
     projectName: { type: String, required: true },
     projectId: Number,
     projectDesc: { type: String },
-    clientName: { type: String }
+    clientName: { type: String },
+    status: { type: String }
 }, { versionKey: false });
 exports.default = mongoose_1.default.model('Project', ProjectSchema);

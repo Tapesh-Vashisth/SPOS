@@ -21,7 +21,11 @@ const PatientDocuments = () => {
         e.preventDefault();
         if (files.length > 0) {
             const formData = new FormData();
-            formData.append('file', files[0]);
+            // formData.append('file', files[0]);
+            for(let i=0;i<files.length;i++)
+            {
+                formData.append('file',files[i]);
+            }
             axios.post(`http://localhost:5500/admin/images/${pname}`,formData)
                 .then(data => setMessage(data.data.message))
                 .catch((error) => setMessage('Error'));

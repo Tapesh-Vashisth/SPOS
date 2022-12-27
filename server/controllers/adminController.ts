@@ -24,12 +24,38 @@ const getImagesOfAllProject = async (req: Request, res: Response) => {
     res.status(200).json({ data:images });
 }
 
+const getAllProjects = async(req:Request,res:Response)=>{
+
+    const projects = await Project.find().exec();
+    let total:any=[];
+    
+    if(!projects)
+    {
+        return res.status(204).json({data:'no data exists'});
+    }
+    
+    let count=0;
+    projects.map(async(x)=>{
+        const images = await Images.findOne({projectName:x.projectName}).exec();
+
+        total.push({project:x,images:images});
+
+        count++;
+
+        console.log(total);
+
+        if(count==projects.length) return res.status(200).json({data:total});
+        
+    })
+}
+
 let pid = 1567;
 const handlePostProject = async (req: Request, res: Response) => {
     const pname = req.body.pname;
     const pdesc = req.body.pdesc;
     const ptitle = req.body.ptitle;
     const clientname = req.body.clientname;
+    const status = req.body.status;
     console.log(pname,ptitle);
 
     const check = await Project.findOne({projectName:pname}).exec();
@@ -40,6 +66,7 @@ const handlePostProject = async (req: Request, res: Response) => {
             projectDesc:pdesc,
             clientName:clientname,
             projectName:pname,
+            status:status,
             projectId:pid
         })
         await newproject.save();
@@ -89,4 +116,4 @@ const setImagesOfAProject = async (req: any, res: Response) => {
 }
 
 
-export { setImagesOfAProject, getImagesOfAProject,getImagesOfAllProject, handlePostProject };
+export { setImagesOfAProject,getAllProjects, getImagesOfAProject,getImagesOfAllProject, handlePostProject };

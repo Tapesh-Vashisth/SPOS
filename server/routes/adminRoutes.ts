@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import {setImagesOfAProject,getImagesOfAProject,getImagesOfAllProject,handlePostProject} from '../controllers/adminController';
+import {setImagesOfAProject,getAllProjects,getImagesOfAProject,getImagesOfAllProject,handlePostProject} from '../controllers/adminController';
 
 const { diskStorage } = require('multer');
 
@@ -18,6 +18,7 @@ const upload = multer({storage:storage});
 
 router.post('/images/:pname',upload.array('file',10),setImagesOfAProject);
 router.get('/images',getImagesOfAllProject);
+router.get('/projects',getAllProjects);
 router.get('/images/:pname',getImagesOfAProject);
 router.post('/new',handlePostProject);
 

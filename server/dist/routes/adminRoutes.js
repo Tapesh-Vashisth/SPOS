@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 router.post('/images/:pname', upload.array('file', 10), adminController_1.setImagesOfAProject);
 router.get('/images', adminController_1.getImagesOfAllProject);
+router.get('/projects', adminController_1.getAllProjects);
 router.get('/images/:pname', adminController_1.getImagesOfAProject);
 router.post('/new', adminController_1.handlePostProject);
 exports.default = router;

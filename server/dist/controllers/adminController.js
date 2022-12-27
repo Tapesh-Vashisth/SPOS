@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handlePostProject = exports.getImagesOfAllProject = exports.getImagesOfAProject = exports.setImagesOfAProject = void 0;
+exports.handlePostProject = exports.getImagesOfAllProject = exports.getImagesOfAProject = exports.getAllProjects = exports.setImagesOfAProject = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const Project_1 = __importDefault(require("../models/Project"));
@@ -32,12 +32,30 @@ const getImagesOfAllProject = (req, res) => __awaiter(void 0, void 0, void 0, fu
     res.status(200).json({ data: images });
 });
 exports.getImagesOfAllProject = getImagesOfAllProject;
+const getAllProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const projects = yield Project_1.default.find().exec();
+    let total = [];
+    if (!projects) {
+        return res.status(204).json({ data: 'no data exists' });
+    }
+    let count = 0;
+    projects.map((x) => __awaiter(void 0, void 0, void 0, function* () {
+        const images = yield Images_1.default.findOne({ projectName: x.projectName }).exec();
+        total.push({ project: x, images: images });
+        count++;
+        console.log(total);
+        if (count == projects.length)
+            return res.status(200).json({ data: total });
+    }));
+});
+exports.getAllProjects = getAllProjects;
 let pid = 1567;
 const handlePostProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const pname = req.body.pname;
     const pdesc = req.body.pdesc;
     const ptitle = req.body.ptitle;
     const clientname = req.body.clientname;
+    const status = req.body.status;
     console.log(pname, ptitle);
     const check = yield Project_1.default.findOne({ projectName: pname }).exec();
     if (!check) {
@@ -46,6 +64,7 @@ const handlePostProject = (req, res) => __awaiter(void 0, void 0, void 0, functi
             projectDesc: pdesc,
             clientName: clientname,
             projectName: pname,
+            status: status,
             projectId: pid
         });
         yield newproject.save();
