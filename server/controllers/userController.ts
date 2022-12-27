@@ -19,7 +19,8 @@ const getAllProjects = async(req:Request,res:Response)=>{
     projects.map(async(x)=>{
         const images = await Images.findOne({projectName:x.projectName}).exec();
 
-        total.push({projectName:x.projectName,status:x.status,image:images?.projectImages[0]});
+        if(!images) total.push({projectName:x.projectName,status:x.status,image:{}});
+        else total.push({projectName:x.projectName,status:x.status,image:images?.projectImages[0]});
 
         count++;
 

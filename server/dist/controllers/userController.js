@@ -25,7 +25,10 @@ const getAllProjects = (req, res) => __awaiter(void 0, void 0, void 0, function*
     let count = 0;
     projects.map((x) => __awaiter(void 0, void 0, void 0, function* () {
         const images = yield Images_2.default.findOne({ projectName: x.projectName }).exec();
-        total.push({ projectName: x.projectName, status: x.status, image: images === null || images === void 0 ? void 0 : images.projectImages[0] });
+        if (!images)
+            total.push({ projectName: x.projectName, status: x.status, image: {} });
+        else
+            total.push({ projectName: x.projectName, status: x.status, image: images === null || images === void 0 ? void 0 : images.projectImages[0] });
         count++;
         console.log(total);
         if (count == projects.length)
