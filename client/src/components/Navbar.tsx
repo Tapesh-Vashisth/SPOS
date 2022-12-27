@@ -19,7 +19,7 @@ interface Props {
 }
 
 const drawerWidth = 200;
-const navItems = [{ name: 'Home', to: "/" }, { name: 'About', to: "/about" }, { name: 'Contact', to: "/contact" }, { name: 'Projects', to: "/projects" }, { name: 'Awards', to: "/awards" }];
+const navItems = [{name: 'Home', to: "/"}, {name: 'About', to: "/about"}, {name: 'Contact', to: "/contact"}, {name: 'Projects', to: "/projects"}, {name: 'Awards', to: "/awards"}, {name: "policy", to: "privacyPolicy"}];
 
 export default function Navbar(props: Props) {
 	const { window } = props;

@@ -3,6 +3,7 @@ import {Stack, Grid} from "@mui/material";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -15,16 +16,22 @@ const Footer = () => {
             </Grid>
             <Grid item xs = {6} sm = {4}>
                 <Stack direction = "column" alignItems="center" style = {{color: "white"}} spacing = {1}>
-                    <p>Who we are</p>
-                    <p>Our Awards</p>
-                    <p>Our Projects</p>
+                    <NavLink to = "/about" style={{textDecoration: "none"}}>
+                        <p>Who we are</p>
+                    </NavLink>
+                    <NavLink to = "/awards" style={{textDecoration: "none"}}>
+                        <p>Our Awards</p>
+                    </NavLink>
+                    <NavLink to = "/projects" style={{textDecoration: "none"}}>
+                        <p>Our Projects</p>
+                    </NavLink>
                 </Stack>
             </Grid>
             <Grid item xs = {6} sm = {4}>
                 <Stack direction = "column" alignItems="center" style = {{color: "white"}} spacing = {1}>
+                    <p>A-8/24, near malai mandir, vasant vihar</p>
                     <p>email: xyz@gmail.com</p>
                     <p>phone: 12345767</p>
-                    <p></p>
                 </Stack>
             </Grid>
         </Grid>
