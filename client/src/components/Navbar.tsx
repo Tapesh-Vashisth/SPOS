@@ -30,7 +30,7 @@ export default function Navbar(props: Props) {
 	};
 
 	const drawer = (
-		<Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+		<Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', background: "grey" }}>
 			<Typography variant="h6" sx={{ my: 2 }}>
 				<img src="/images/logo.jpg" style={{ width: "75px", height: "75px" }} />
 			</Typography>
