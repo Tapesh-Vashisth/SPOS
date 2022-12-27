@@ -7,16 +7,27 @@ import Images from "../models/Images"
 
 const getAllProjects = async(req:Request,res:Response)=>{
 
-    const d = await Project.find().exec();
-    const i = await Images.find().exec();
-    let n:any=[];
-
-    if(!d)
+    const projects = await Project.find().exec();
+    let total:any=[];
+    
+    if(!projects)
     {
         return res.status(204).json({data:'no data exists'});
     }
     
-    await res.status(200).json({data:{images:i,project:d}});
+    let count=0;
+    projects.map(async(x)=>{
+        const images = await Images.findOne({projectName:x.projectName}).exec();
+
+        total.push({projectName:x.projectName,status:x.status,image:images?.projectImages[0]});
+
+        count++;
+
+        console.log(total);
+
+        if(count==projects.length) return res.status(200).json({data:total});
+        
+    })
 }
 
 const getSelectProject = async(req:Request,res:Response)=>{

@@ -7,14 +7,13 @@ axios.defaults.withCredentials=true;
 
 export default function AddNewProject() {
 
-    const [data,setData] = useState({pname:'',pdesc:'',ptitle:'',clientname:''});
+    const [data,setData] = useState({pname:'',pdesc:'',ptitle:'',clientname:'',status:''});
     const nav = useNavigate();
 
     function handleChange(e:any)
     {
         const n = e.target.name;
         const v = e.target.value;
-        // console.log(n,v);
         setData(prev=>{
             return {...prev,[n]:v};
         });
@@ -27,12 +26,6 @@ export default function AddNewProject() {
             console.log(t);
             if(t.data)
             {
-                nav('/admin');
-                console.log('done');
-            }
-            else
-            {
-                alert('please enter unique name for a new project');
                 setData(prev=>{
                     return {...prev,pname:''};
                 })
@@ -45,6 +38,18 @@ export default function AddNewProject() {
                 setData(prev=>{
                     return {...prev,pdesc:''};
                 })
+                setData(prev=>{
+                    return {...prev,status:''};
+                })
+                nav('/admin');
+                console.log('done');
+            }
+            else
+            {
+                alert('please enter unique name for a new project');
+                setData(prev=>{
+                    return {...prev,pname:''};
+                })
             }
         } catch (err) {
             console.log(err);
@@ -55,9 +60,9 @@ export default function AddNewProject() {
         <div style={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'300px',marginBottom:'161px'}}>
             <form style={{backgroundColor:'#fff',width:'25%',display:'flex',flexDirection:'column',marginTop:'300px',justifyContent:'center',alignItems:'center',padding:'10px'}}>
                 <input  type="text" onChange={handleChange} value={data.pname} name="pname" id="input" placeholder='enter the name' />
-                <input type="text" onChange={handleChange} value={data.ptitle} name="ptitle" id="input" placeholder='enter the title' />
                 <input type="text" onChange={handleChange} value={data.pdesc} name="pdesc" id="input" placeholder='enter the description' />
                 <input type="text" onChange={handleChange} value={data.clientname} name="clientname" id="input" placeholder='enter client name' />
+                <input type="text" onChange={handleChange} value={data.status} name="status" id="input" placeholder='enter status' />
                 <button type="submit" onClick={(e)=>{
                     e.preventDefault();
                     sendRequest(data)

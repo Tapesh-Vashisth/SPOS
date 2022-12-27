@@ -7,13 +7,13 @@ const Home = React.lazy(() => import("./pages/Home"));
 const About = React.lazy(() => import("./pages/About"));
 const Contact = React.lazy(() => import("./pages/Contact"));
 const Projects = React.lazy(() => import("./pages/Projects"));
-const Project = React.lazy(() => import("./pages/Project"));
+const Project = React.lazy(() => import("./components/Project"));
 const Awards = React.lazy(() => import("./pages/Awards"));
 const Policy = React.lazy(() => import("./pages/Policy"));
 const Footer = React.lazy(() => import("./components/Footer"));
 const AdminHome = React.lazy(() => import("./pages/AdminHome"));
 const AddImages = React.lazy(() => import("./components/addImages"));
-const SeeImages = React.lazy(() => import("./components/SeeImages"));
+const SeeImages = React.lazy(() => import("./pages/SeeImages"));
 
 function App() {
   return (
@@ -36,6 +36,10 @@ function App() {
 
         <Route path='/projects' element={<React.Suspense fallback = {<LazyFallBack />}>
           <Projects />
+        </React.Suspense>}></Route>
+
+        <Route path='/projects/:name' element={<React.Suspense fallback = {<LazyFallBack />}>
+          <Project />
         </React.Suspense>}></Route>
 
         <Route path='/awards' element={<React.Suspense fallback = {<LazyFallBack />}>

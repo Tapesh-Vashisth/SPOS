@@ -17,13 +17,20 @@ const Project_1 = __importDefault(require("../models/Project"));
 const Images_1 = __importDefault(require("../models/Images"));
 const Images_2 = __importDefault(require("../models/Images"));
 const getAllProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const d = yield Project_1.default.find().exec();
-    const i = yield Images_2.default.find().exec();
-    let n = [];
-    if (!d) {
+    const projects = yield Project_1.default.find().exec();
+    let total = [];
+    if (!projects) {
         return res.status(204).json({ data: 'no data exists' });
     }
-    yield res.status(200).json({ data: { images: i, project: d } });
+    let count = 0;
+    projects.map((x) => __awaiter(void 0, void 0, void 0, function* () {
+        const images = yield Images_2.default.findOne({ projectName: x.projectName }).exec();
+        total.push({ projectName: x.projectName, status: x.status, image: images === null || images === void 0 ? void 0 : images.projectImages[0] });
+        count++;
+        console.log(total);
+        if (count == projects.length)
+            return res.status(200).json({ data: total });
+    }));
 });
 exports.getAllProjects = getAllProjects;
 const getSelectProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
