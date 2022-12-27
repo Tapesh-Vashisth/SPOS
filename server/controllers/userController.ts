@@ -31,10 +31,10 @@ const getAllProjects = async(req:Request,res:Response)=>{
 
 const getSelectProject = async(req:Request,res:Response)=>{
 
-    const id = req.params.pid;
+    const id = req.params.pname;
 
-    const d = await Project.findOne({projectId:id}).exec();
-    const i = await Image.findOne({projectId:id}).exec();
+    const d = await Project.findOne({projectName:id}).exec();
+    const i = await Image.findOne({projectName:id}).exec();
 
     if(!d)
     {
@@ -42,8 +42,8 @@ const getSelectProject = async(req:Request,res:Response)=>{
     }
     else
     {
-        if(!i) return res.status(204).json({data:{...d,images:{}}});
-        else res.status(200).json({data:{...d,images:i.projectImages}});
+        if(!i) return res.status(204).json({data:{project:d,images:null}});
+        else res.status(200).json({data:{project:d,images:i.projectImages}});
     }
 }
 

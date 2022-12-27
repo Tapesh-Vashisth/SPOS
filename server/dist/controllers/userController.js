@@ -36,17 +36,17 @@ const getAllProjects = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.getAllProjects = getAllProjects;
 const getSelectProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.pid;
-    const d = yield Project_1.default.findOne({ projectId: id }).exec();
-    const i = yield Images_1.default.findOne({ projectId: id }).exec();
+    const id = req.params.pname;
+    const d = yield Project_1.default.findOne({ projectName: id }).exec();
+    const i = yield Images_1.default.findOne({ projectName: id }).exec();
     if (!d) {
         return res.status(404).json({ data: 'not found' });
     }
     else {
         if (!i)
-            return res.status(204).json({ data: Object.assign(Object.assign({}, d), { images: {} }) });
+            return res.status(204).json({ data: { project: d, images: null } });
         else
-            res.status(200).json({ data: Object.assign(Object.assign({}, d), { images: i.projectImages }) });
+            res.status(200).json({ data: { project: d, images: i.projectImages } });
     }
 });
 exports.getSelectProject = getSelectProject;
