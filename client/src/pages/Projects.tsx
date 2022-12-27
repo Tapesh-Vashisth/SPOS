@@ -3,6 +3,7 @@ import { Stack } from "@mui/material";
 import { Grid } from "@mui/material";
 import { motion } from 'framer-motion';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 const Projects = () => {
 
@@ -11,18 +12,22 @@ const Projects = () => {
 
   const getProjects = async () => {
     try {
+      setOngoing([]);
+      setFinished([]);
       const response = await axios.get('http://localhost:5500/projects');
-      for (let i = 0; i < response.data.length; i++){
-        if (response.data[i].status === "finished"){
-          setFinished((prev) => {
-            return [...prev, response.data[i]];
-          })
+      console.log(response.data);
+      let ongo = [];
+      let finish = [];
+      for (let i = 0; i < response.data.data.length; i++){
+        if (response.data.data[i].status === "Finished"){
+          finish.push(response.data.data[i]);
         }else{
-          setOngoing((prev) => {
-            return [...prev, response.data[i]];
-          })
+          ongo.push(response.data.data[i])
         }
       }
+
+      setOngoing(ongo);
+      setFinished(finish);
     } catch (Err: any){
       alert(Err.message);
     }
@@ -42,19 +47,25 @@ const Projects = () => {
 					<Grid container columns={12} spacing={4}>
 
             {onGoing.length > 0 ? onGoing.map((x, i) => {
-              const bstr: any = btoa(
-                         String.fromCharCode(...new Uint8Array((x.image.data))));
+              if (x.image){
+                console.log(x);
+                const bstr: any = btoa(
+                           String.fromCharCode(...new Uint8Array((x.image.data.data))));
+  
+                return (
+                  <Grid key = {i} item xs={12} sm={6} md={3}>
+                    <motion.div initial={{ opacity: 0 }} whileHover={{ scale: 0.8, opacity: 0.8 }} animate={{ opacity: 1, transition: { duration: 1 } }}>
+                      <Stack direction="column" style={{ background: "grey" }}>
+                        <NavLink to={`/projects/${x.projectName}`}> <img src={`data:${x.image.contentType};base64,${bstr}`}  alt="" style={{ width: "100%", height: "300px" }}  /> </NavLink>
+                        <h3 style={{ textAlign: "center", padding: "10px" }}>{x.projectName}</h3>
+                      </Stack>
+                    </motion.div>
+                  </Grid>
+                )
 
-              return (
-                <Grid item xs={12} sm={6} md={3}>
-                  <motion.div initial={{ opacity: 0 }} whileHover={{ scale: 0.8, opacity: 0.8 }} animate={{ opacity: 1, transition: { duration: 1 } }}>
-                    <Stack direction="column" style={{ background: "grey" }}>
-                      <a href={`/projects/:${x.projectName}`}> <img src={`data:${x.image.contentType};base64,${bstr}`}  alt="" style={{ width: "100%", height: "300px" }}  /> </a>
-                      <h3 style={{ textAlign: "center", padding: "10px" }}>{x.projectName}</h3>
-                    </Stack>
-                  </motion.div>
-                </Grid>
-              )
+              }else{
+                return null;
+              }
             }): null}
 
 						
@@ -69,19 +80,23 @@ const Projects = () => {
 					<Grid container columns={12} spacing={4}>
             
             {finished.length > 0 ? finished.map((x, i) => {
-              const bstr: any = btoa(
-                String.fromCharCode(...new Uint8Array((x.image.data))));
-                
-              return (
-                <Grid item xs={12} sm={6} md={3}>
-                  <motion.div initial={{ opacity: 0 }} whileHover={{ scale: 0.8, opacity: 0.8 }} animate={{ opacity: 1, transition: { duration: 1 } }}>
-                    <Stack direction="column" style={{ background: "grey" }}>
-                      <a href={`/projects/:${x.projectName}`}> <img src={`data:${x.image.contentType};base64,${bstr}`}  alt="" style={{ width: "100%", height: "300px" }}  /> </a>
-                      <h3 style={{ textAlign: "center", padding: "10px" }}>{x.projectName}</h3>
-                    </Stack>
-                  </motion.div>
-                </Grid>
-              )
+              if (x.image){
+                const bstr: any = btoa(
+                  String.fromCharCode(...new Uint8Array((x.image.data.data))));
+                  
+                return (
+                  <Grid key = {i} item xs={12} sm={6} md={3}>
+                    <motion.div initial={{ opacity: 0 }} whileHover={{ scale: 0.8, opacity: 0.8 }} animate={{ opacity: 1, transition: { duration: 1 } }}>
+                      <Stack direction="column" style={{ background: "grey" }}>
+                        <NavLink to={`/projects/${x.projectName}`}> <img src={`data:${x.image.contentType};base64,${bstr}`}  alt="" style={{ width: "100%", height: "300px" }}  /> </NavLink>
+                        <h3 style={{ textAlign: "center", padding: "10px" }}>{x.projectName}</h3>
+                      </Stack>
+                    </motion.div>
+                  </Grid>
+                )
+              }else{
+                return null;
+              }
             }): null}
 
 

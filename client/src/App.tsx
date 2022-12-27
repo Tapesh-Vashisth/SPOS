@@ -7,7 +7,7 @@ const Home = React.lazy(() => import("./pages/Home"));
 const About = React.lazy(() => import("./pages/About"));
 const Contact = React.lazy(() => import("./pages/Contact"));
 const Projects = React.lazy(() => import("./pages/Projects"));
-const Project = React.lazy(() => import("./components/Project"));
+const Project = React.lazy(() => import("./pages/Project"));
 const Awards = React.lazy(() => import("./pages/Awards"));
 const Policy = React.lazy(() => import("./pages/Policy"));
 const Footer = React.lazy(() => import("./components/Footer"));
