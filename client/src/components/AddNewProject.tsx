@@ -62,7 +62,10 @@ export default function AddNewProject() {
                 <input  type="text" onChange={handleChange} value={data.pname} name="pname" id="input" placeholder='enter the name' />
                 <input type="text" onChange={handleChange} value={data.pdesc} name="pdesc" id="input" placeholder='enter the description' />
                 <input type="text" onChange={handleChange} value={data.clientname} name="clientname" id="input" placeholder='enter client name' />
-                <input type="text" onChange={handleChange} value={data.status} name="status" id="input" placeholder='enter status' />
+                <select name="status" onChange={handleChange} id="">
+                    <option value="finished">Finished</option>
+                    <option value="ongoing">Ongoing</option>
+                </select>
                 <button type="submit" onClick={(e)=>{
                     e.preventDefault();
                     sendRequest(data)
