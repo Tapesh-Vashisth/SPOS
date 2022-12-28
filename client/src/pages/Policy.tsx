@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const Policy = () => {
   return (
-    <Stack direction="column" spacing={2} marginTop="80px" padding="30px">
+    <Stack direction="column" spacing={2} marginTop="80px" padding="70px">
       <motion.p style = {{fontSize: "20px"}} initial = {{x: 100}} animate = {{x: 0, transition: {
         duration: 1
       }}}>
