@@ -5,7 +5,7 @@ import Project from "../models/Project"
 import Image from "../models/Images"
 import Images from "../models/Images"
 import nodemailer from 'nodemailer';
-
+require("dotenv").config();
 
 const getAllProjects = async(req:Request,res:Response)=>{
 
@@ -78,6 +78,7 @@ const sendMailAfterContact = async(req:Request,res:Response)=>{
     }
 
     transporter.sendMail(mailOptions, (err: any, success: any) => {
+
         if (err) {
             console.log("error is : ", err)
             return res.status(503).json({'message':'mail not sent'});

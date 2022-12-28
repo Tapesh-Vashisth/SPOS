@@ -8,4 +8,5 @@ const userController_1 = require("../controllers/userController");
 const router = express_1.default.Router();
 router.get('/', userController_1.getAllProjects);
 router.get('/:pname', userController_1.getSelectProject);
+router.post('/contact', userController_1.sendMailAfterContact);
 exports.default = router;

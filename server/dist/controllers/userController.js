@@ -12,10 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSelectProject = exports.getAllProjects = void 0;
+exports.sendMailAfterContact = exports.getSelectProject = exports.getAllProjects = void 0;
 const Project_1 = __importDefault(require("../models/Project"));
 const Images_1 = __importDefault(require("../models/Images"));
 const Images_2 = __importDefault(require("../models/Images"));
+const nodemailer_1 = __importDefault(require("nodemailer"));
+require("dotenv").config();
 const getAllProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const projects = yield Project_1.default.find().exec();
     let total = [];
@@ -50,3 +52,38 @@ const getSelectProject = (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.getSelectProject = getSelectProject;
+const sendMailAfterContact = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const cname = req.body.name;
+    const cemail = req.body.email;
+    const desc = req.body.desc;
+    console.log(cname, cemail, desc);
+    let transporter = nodemailer_1.default.createTransport({
+        service: "gmail",
+        auth: {
+            user: "lummaoiscringe@gmail.com",
+            pass: process.env.PASSWORD
+        }
+    });
+    let mailOptions = {
+        from: "lummaoiscringe@gmail.com",
+        to: "pranauv1803@gmail.com",
+        subject: "Regarding new client",
+        text: `You have a pending request from the company ${cname}`,
+        html: `<p> Respected Sir/Madam, we have redirected a contact request to you from ${cname}. These are the details :- 
+               <br>
+               client email : ${cemail}
+               client description : ${desc} 
+               </p>`
+    };
+    transporter.sendMail(mailOptions, (err, success) => {
+        if (err) {
+            console.log("error is : ", err);
+            return res.status(503).json({ 'message': 'mail not sent' });
+        }
+        else {
+            console.log("success, email has been sent : ", success);
+            res.status(200).json({ 'message': 'email sent successfully' });
+        }
+    });
+});
+exports.sendMailAfterContact = sendMailAfterContact;
