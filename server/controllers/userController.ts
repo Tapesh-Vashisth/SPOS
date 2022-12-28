@@ -4,6 +4,8 @@ import { Request,Response,NextFunction } from "express"
 import Project from "../models/Project"
 import Image from "../models/Images"
 import Images from "../models/Images"
+import nodemailer from 'nodemailer';
+
 
 const getAllProjects = async(req:Request,res:Response)=>{
 
@@ -47,4 +49,44 @@ const getSelectProject = async(req:Request,res:Response)=>{
     }
 }
 
-export  {getAllProjects,getSelectProject}
+const sendMailAfterContact = async(req:Request,res:Response)=>{
+
+    const cname = req.body.name;
+    const cemail = req.body.email;
+    const desc = req.body.desc;
+
+    console.log(cname,cemail,desc);
+
+    let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "lummaoiscringe@gmail.com",
+            pass: process.env.PASSWORD
+        }
+    })
+
+    let mailOptions = {
+        from: "lummaoiscringe@gmail.com",
+        to: "pranauv1803@gmail.com",
+        subject: "Regarding new client",
+        text: `You have a pending request from the company ${cname}`,
+        html: `<p> Respected Sir/Madam, we have redirected a contact request to you from ${cname}. These are the details :- 
+               <br>
+               client email : ${cemail}
+               client description : ${desc} 
+               </p>`
+    }
+
+    transporter.sendMail(mailOptions, (err: any, success: any) => {
+        if (err) {
+            console.log("error is : ", err)
+            return res.status(503).json({'message':'mail not sent'});
+        }
+        else {
+            console.log("success, email has been sent : ", success)
+            res.status(200).json({'message':'email sent successfully'});
+        }
+    })
+}
+
+export  {getAllProjects,getSelectProject,sendMailAfterContact}
